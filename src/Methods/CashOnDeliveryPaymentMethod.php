@@ -116,7 +116,7 @@ class CashOnDeliveryPaymentMethod extends PaymentMethodService
     public function getName($lang='de')
     {
         $trans = pluginApp(\Plenty\Plugin\Translation\Translator::class);
-        $paymentMethodName = $trans->trans('CashOnDelivery::PaymentMethod.name');
+        $paymentMethodName = $trans->trans('Ceevo::PaymentMethod.name');
         if(strlen($paymentMethodName)){
             return $paymentMethodName;
         }
