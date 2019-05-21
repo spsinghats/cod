@@ -170,55 +170,55 @@ class PaymentService
     {
         $this->getLogger(__METHOD__)->error('inside payment service', $paymentHelper);
         $this->createCustomer($order);
-        $transactionId = $this->session->getPlugin()->getValue('walleeTransactionId');
-        $parameters = [
-            'transactionId' => $transactionId,
-            'order' => $order,
-            'paymentMethod' => $paymentMethod,
-            'billingAddress' => $this->getAddress($order->billingAddress),
-            'shippingAddress' => $this->getAddress($order->deliveryAddress),
-            'language' => $this->session->getLocaleSettings()->language,
-            'customerId' => $this->orderHelper->getOrderRelationId($order, OrderRelationReference::REFERENCE_TYPE_CONTACT),
-            'successUrl' => $this->getSuccessUrl(),
-            'failedUrl' => $this->getFailedUrl(),
-            'checkoutUrl' => $this->getCheckoutUrl()
-        ];
-        $this->getLogger(__METHOD__)->debug('wallee::TransactionParameters', $parameters);
-        $this->session->getPlugin()->unsetKey('walleeTransactionId');
-        $transaction = $this->sdkService->call('createTransactionFromOrder', $parameters);
-        if (is_array($transaction) && $transaction['error']) {
-            return [
-                'transactionId' => $transactionId,
-                'type' => GetPaymentMethodContent::RETURN_TYPE_ERROR,
-                'content' => $transaction['error_msg']
-            ];
-        }
-        $payment = $this->paymentHelper->createPlentyPayment($transaction);
-        $this->paymentHelper->assignPlentyPaymentToPlentyOrder($payment, $order->id);
-        $hasPossiblePaymentMethods = $this->sdkService->call('hasPossiblePaymentMethods', [
-            'transactionId' => $transaction['id']
-        ]);
-        if (! $hasPossiblePaymentMethods) {
-            return [
-                'transactionId' => $transaction['id'],
-                'type' => GetPaymentMethodContent::RETURN_TYPE_ERROR,
-                'content' => 'The selected payment method is not available.'
-            ];
-        }
-        $paymentPageUrl = $this->sdkService->call('buildPaymentPageUrl', [
-            'id' => $transaction['id']
-        ]);
-        if (is_array($paymentPageUrl) && isset($paymentPageUrl['error'])) {
-            return [
-                'transactionId' => $transaction['id'],
-                'type' => GetPaymentMethodContent::RETURN_TYPE_ERROR,
-                'content' => $paymentPageUrl['error_msg']
-            ];
-        }
-        return [
-            'type' => GetPaymentMethodContent::RETURN_TYPE_REDIRECT_URL,
-            'content' => $paymentPageUrl
-        ];
+        // $transactionId = $this->session->getPlugin()->getValue('walleeTransactionId');
+        // $parameters = [
+        //     'transactionId' => $transactionId,
+        //     'order' => $order,
+        //     'paymentMethod' => $paymentMethod,
+        //     'billingAddress' => $this->getAddress($order->billingAddress),
+        //     'shippingAddress' => $this->getAddress($order->deliveryAddress),
+        //     'language' => $this->session->getLocaleSettings()->language,
+        //     'customerId' => $this->orderHelper->getOrderRelationId($order, OrderRelationReference::REFERENCE_TYPE_CONTACT),
+        //     'successUrl' => $this->getSuccessUrl(),
+        //     'failedUrl' => $this->getFailedUrl(),
+        //     'checkoutUrl' => $this->getCheckoutUrl()
+        // ];
+        // $this->getLogger(__METHOD__)->debug('wallee::TransactionParameters', $parameters);
+        // $this->session->getPlugin()->unsetKey('walleeTransactionId');
+        // $transaction = $this->sdkService->call('createTransactionFromOrder', $parameters);
+        // if (is_array($transaction) && $transaction['error']) {
+        //     return [
+        //         'transactionId' => $transactionId,
+        //         'type' => GetPaymentMethodContent::RETURN_TYPE_ERROR,
+        //         'content' => $transaction['error_msg']
+        //     ];
+        // }
+        // $payment = $this->paymentHelper->createPlentyPayment($transaction);
+        // $this->paymentHelper->assignPlentyPaymentToPlentyOrder($payment, $order->id);
+        // $hasPossiblePaymentMethods = $this->sdkService->call('hasPossiblePaymentMethods', [
+        //     'transactionId' => $transaction['id']
+        // ]);
+        // if (! $hasPossiblePaymentMethods) {
+        //     return [
+        //         'transactionId' => $transaction['id'],
+        //         'type' => GetPaymentMethodContent::RETURN_TYPE_ERROR,
+        //         'content' => 'The selected payment method is not available.'
+        //     ];
+        // }
+        // $paymentPageUrl = $this->sdkService->call('buildPaymentPageUrl', [
+        //     'id' => $transaction['id']
+        // ]);
+        // if (is_array($paymentPageUrl) && isset($paymentPageUrl['error'])) {
+        //     return [
+        //         'transactionId' => $transaction['id'],
+        //         'type' => GetPaymentMethodContent::RETURN_TYPE_ERROR,
+        //         'content' => $paymentPageUrl['error_msg']
+        //     ];
+        // }
+        // return [
+        //     'type' => GetPaymentMethodContent::RETURN_TYPE_REDIRECT_URL,
+        //     'content' => $paymentPageUrl
+        // ];
     }
     /**
      *
@@ -380,110 +380,142 @@ class PaymentService
 
     function createCustomer($order){
 
-        global $customer_id;
-       $customer_query = tep_db_query("select * from " . TABLE_CUSTOMERS . " where customers_id = '".(int)$customer_id."'");
-       $customer_array = tep_db_fetch_array($customer_query);
-       tep_db_query("insert into " . CUSTOMERS_CEEVO_TOKENS . " (customers_id, ceevo_token, payment_method) values ('" . tep_db_input((int)$customer_id) . "', '" . tep_db_input($order->info['customerToken']) . "', '" . tep_db_input($order->info['paymentMethod']) . "')");
+        // global $customer_id;
+       
+        // $data = array("billing" => array("city" => $order->billing['city'], "country" => $order->billing['country']['iso_code_2'],"state" => $order->billing['state'],"street" => $order->billing['street_address'],"zip"=> $order->billing['postcode']),
+        //               "email" => $order->customer['email_address'],"firstName" => $order->customer['firstname'],"lastName" => $order->customer['lastname'],"mobile" => $order->customer['telephone'],"phone" => $order->customer['telephone'],"sex" => strtoupper($customer_array['customers_gender']));  
+        // $data_string = json_encode($data);
+        // $get_data = $this->callAPI('POST', 'https://api.ceevo.com/acquiring/customer', $data_string);
+        // $response = json_decode($get_data, true);
     
-        $data = array("billing" => array("city" => $order->billing['city'], "country" => $order->billing['country']['iso_code_2'],"state" => $order->billing['state'],"street" => $order->billing['street_address'],"zip"=> $order->billing['postcode']),
-                      "email" => $order->customer['email_address'],"firstName" => $order->customer['firstname'],"lastName" => $order->customer['lastname'],"mobile" => $order->customer['telephone'],"phone" => $order->customer['telephone'],"sex" => strtoupper($customer_array['customers_gender']));  
-        $data_string = json_encode($data);
-        $get_data = $this->callAPI('POST', 'https://api.ceevo.com/acquiring/customer', $data_string);
-        $response = json_decode($get_data, true);
-    
-        $this->registerAccountToken($resonse,$order);
-        $chargeResponse = $this->chargeApi($order);
-        return $chargeResponse;
+        // $this->registerAccountToken($resonse,$order);
+        // $chargeResponse = $this->chargeApi($order);
+        // return $chargeResponse;
     
     }
     
     function registerAccountToken($customer_registered_id,$order){
-        $token_array = array("accountToken" => $order->info['customerToken'],"default" => true);
-        $token_string = json_encode($token_array);
-        $get_data = $this->callAPI('POST', 'https://api.ceevo.com/acquiring/customer/'.$customer_registered_id, $token_string);
-        $response = json_decode($get_data, true);
+        // $token_array = array("accountToken" => $order->info['customerToken'],"default" => true);
+        // $token_string = json_encode($token_array);
+        // $get_data = $this->callAPI('POST', 'https://api.ceevo.com/acquiring/customer/'.$customer_registered_id, $token_string);
+        // $response = json_decode($get_data, true);
     
     }
     
     
     function chargeApi($order){
-        global $customer_id,$insert_id;
-        $api = "https://auth.ceevo.com/auth/realms/ceevo-realm/protocol/openid-connect/token"; 
-        $param['grant_type'] = "client_credentials"; 
-        $param['client_id'] = MODULE_PAYMENT_CEEVO_CLIENT_ID; 
-        $param['client_secret'] = MODULE_PAYMENT_CEEVO_CLIENT_SECRET; 
-        $flag = MODULE_PAYMENT_CEEVO_SECURE_FLAG;
+        // global $customer_id,$insert_id;
+        // $api = "https://auth.ceevo.com/auth/realms/ceevo-realm/protocol/openid-connect/token"; 
+        // $param['grant_type'] = "client_credentials"; 
+        // $param['client_id'] = MODULE_PAYMENT_CEEVO_CLIENT_ID; 
+        // $param['client_secret'] = MODULE_PAYMENT_CEEVO_CLIENT_SECRET; 
+        // $flag = MODULE_PAYMENT_CEEVO_SECURE_FLAG;
         
-        $mode = MODULE_PAYMENT_CEEVO_TRANSACTION_MODE;
-        $ch = curl_init(); 
-        curl_setopt($ch, CURLOPT_URL,$api); 
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER,1); 
-        //curl_setopt ($ch, CURLOPT_SSL_VERIFYHOST, 1);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+        // $mode = MODULE_PAYMENT_CEEVO_TRANSACTION_MODE;
+        // $ch = curl_init(); 
+        // curl_setopt($ch, CURLOPT_URL,$api); 
+        // curl_setopt($ch, CURLOPT_RETURNTRANSFER,1); 
+        // //curl_setopt ($ch, CURLOPT_SSL_VERIFYHOST, 1);
+        // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
         
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($param));
-        $res = curl_exec($ch); 
+        // curl_setopt($ch, CURLOPT_POST, 1);
+        // curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($param));
+        // $res = curl_exec($ch); 
         
-        $currencies = new ISOCurrencies();
-        $moneyParser = new DecimalMoneyParser($currencies);
-        $money = $moneyParser->parse((string)$order->info['total'], $order->info['currency']);
-        $converted_money = $money->getAmount(); // outputs 100000
-        $orderItems = $order->products;
-        $items_array = [];
-        foreach($orderItems as $items){
+        // // $currencies = new ISOCurrencies();
+        // // $moneyParser = new DecimalMoneyParser($currencies);
+        // // $money = $moneyParser->parse((string)$order->info['total'], $order->info['currency']);
+        // // $converted_money = $money->getAmount(); // outputs 100000
+        // $orderItems = $order->products;
+        // $items_array = [];
+        // foreach($orderItems as $items){
           
-          $item_json = array("item" => $items['name'],"itemValue" => $moneyParser->parse((string)$items['final_price'], $order->info['currency'])->getAmount());
-          array_push($items_array, json_encode($item_json));
-        }
-        $itemString = implode(',',$items_array);
+        //   $item_json = array("item" => $items['name'],"itemValue" => $moneyParser->parse((string)$items['final_price'], $order->info['currency'])->getAmount());
+        //   array_push($items_array, json_encode($item_json));
+        // }
+        // $itemString = implode(',',$items_array);
     
-        // echo $res;
-        $jres = json_decode($res, true);
-        $access_token = $jres['access_token'];
+        // // echo $res;
+        // $jres = json_decode($res, true);
+        // $access_token = $jres['access_token'];
         
-        $authorization = "Authorization: Bearer $access_token";
+        // $authorization = "Authorization: Bearer $access_token";
         
-        $charge_api = "https://api.ceevo.com/acquiring/charge"; 
+        // $charge_api = "https://api.ceevo.com/acquiring/charge"; 
         
-        $cparam = '{
-            "cartItems": ['.$itemString.'],
-            "amount": '.$converted_money.',
-            "3dsecure": "'.$flag.'",
-            "mode" : "'.$mode.'",
-            "methodCode":  "'.$order->info['paymentMethod'].'",
-            "currency": "'.$order->info['currency'].'",
-            "accountToken": "'.$order->info['customerToken'].'",
-            "sessionId":"'.$order->info['sessionToken'].'",
-            "referenceId": "'.$insert_id.'",
-            "statementDescriptor": "'.STORE_OWNER.'",
-            "userEmail": "'.$order->customer['email_address'].'",
-            "shippingAddress": {
-                "city": "'.$order->delivery['city'].'",
-                "country": "'.$order->delivery['country']['iso_code_2'].'",
-                "state": "'.$order->delivery['state'].'",
-                "street": "'.$order->delivery['street_address'].'",
-                "zip": "'.$order->delivery['postcode'].'"
-            }
-        }';
+        // $cparam = '{
+        //     "cartItems": ['.$itemString.'],
+        //     "amount": '.$converted_money.',
+        //     "3dsecure": "'.$flag.'",
+        //     "mode" : "'.$mode.'",
+        //     "methodCode":  "'.$order->info['paymentMethod'].'",
+        //     "currency": "'.$order->info['currency'].'",
+        //     "accountToken": "'.$order->info['customerToken'].'",
+        //     "sessionId":"'.$order->info['sessionToken'].'",
+        //     "referenceId": "'.$insert_id.'",
+        //     "statementDescriptor": "'.STORE_OWNER.'",
+        //     "userEmail": "'.$order->customer['email_address'].'",
+        //     "shippingAddress": {
+        //         "city": "'.$order->delivery['city'].'",
+        //         "country": "'.$order->delivery['country']['iso_code_2'].'",
+        //         "state": "'.$order->delivery['state'].'",
+        //         "street": "'.$order->delivery['street_address'].'",
+        //         "zip": "'.$order->delivery['postcode'].'"
+        //     }
+        // }';
         
-        //print_r($cparam);
-        $ch = curl_init(); 
-        curl_setopt($ch, CURLOPT_URL,$charge_api); 
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER,1); 
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+        // //print_r($cparam);
+        // $ch = curl_init(); 
+        // curl_setopt($ch, CURLOPT_URL,$charge_api); 
+        // curl_setopt($ch, CURLOPT_RETURNTRANSFER,1); 
+        // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
         
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $cparam);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                'Content-Type: application/json; charset=utf-8',
-                'Content-Length: ' . strlen($cparam),
-                $authorization
-            )
-        );
-        $cres = curl_exec($ch); 
-        $charge_response = json_decode($cres, true);
-        return $charge_response;
+        // curl_setopt($ch, CURLOPT_POST, 1);
+        // curl_setopt($ch, CURLOPT_POSTFIELDS, $cparam);
+        // curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+        //         'Content-Type: application/json; charset=utf-8',
+        //         'Content-Length: ' . strlen($cparam),
+        //         $authorization
+        //     )
+        // );
+        // $cres = curl_exec($ch); 
+        // $charge_response = json_decode($cres, true);
+        // return $charge_response;
+    }
+
+    function callAPI($method, $url, $data){
+        $curl = curl_init();
+     
+        switch ($method){
+           case "POST":
+              curl_setopt($curl, CURLOPT_POST, 1);
+              if ($data)
+                 curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+              break;
+           case "PUT":
+              curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
+              if ($data)
+                 curl_setopt($curl, CURLOPT_POSTFIELDS, $data);			 					
+              break;
+           default:
+              if ($data)
+                 $url = sprintf("%s?%s", $url, http_build_query($data));
+        }
+     
+        // OPTIONS:
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+           
+           'Content-Type: application/json',
+        ));
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+     
+        // EXECUTE:
+        $result = curl_exec($curl);
+        if(!$result){die("Connection Failure");}
+        curl_close($curl);
+        return $result;
     }
         
     

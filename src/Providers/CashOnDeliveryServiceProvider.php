@@ -20,6 +20,7 @@ use Plenty\Modules\Payment\Method\Contracts\PaymentMethodContainer;
 use Plenty\Plugin\Translation\Translator;
 use CashOnDelivery\Services\PaymentService;
 use Plenty\Modules\Order\Contracts\OrderRepositoryContract;
+use Plenty\Modules\Payment\Method\Contracts\PaymentMethodRepositoryContract;
 
 class CashOnDeliveryServiceProvider extends ServiceProvider
 {
@@ -36,7 +37,8 @@ class CashOnDeliveryServiceProvider extends ServiceProvider
         PaymentMethodContainer $payContainer,
         Dispatcher $eventDispatcher,
         PaymentService $paymentService,
-        OrderRepositoryContract $orderRepository
+        OrderRepositoryContract $orderRepository,
+        PaymentMethodRepositoryContract $paymentMethodService
         ) 
     {
          // Register the Invoice payment method in the payment method container
