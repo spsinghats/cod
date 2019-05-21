@@ -24,7 +24,7 @@
         },
         "secureFlag":{
           "label": "Secure Flag",
-          "type": "dropdown",
+          "type": "inputDropdown",
           "possibleValues": {
             "0": "True",
             "1": "False"
