@@ -10,7 +10,6 @@ use Plenty\Modules\Account\Address\Contracts\AddressRepositoryContract;
 use Plenty\Modules\Order\Shipping\Countries\Contracts\CountryRepositoryContract;
 use Plenty\Modules\Payment\Events\Checkout\GetPaymentMethodContent;
 use Plenty\Modules\Helper\Services\WebstoreHelper;
-use CashOnDelivery\Helper\PaymentHelper;
 use Plenty\Plugin\Log\Loggable;
 use Plenty\Modules\Payment\Method\Models\PaymentMethod;
 use Plenty\Modules\Order\Models\Order;
@@ -64,11 +63,6 @@ class PaymentService
     private $webstoreHelper;
     /**
      *
-     * @var PaymentHelper
-     */
-    private $paymentHelper;
-    /**
-     *
      * @var OrderHelper
      */
     private $orderHelper;
@@ -87,10 +81,9 @@ class PaymentService
      * @param AddressRepositoryContract $addressRepository
      * @param CountryRepositoryContract $countryRepository
      * @param WebstoreHelper $webstoreHelper
-     * @param PaymentHelper $paymentHelper
      * @param OrderRepositoryContract $orderRepository
      */
-    public function __construct( ConfigRepository $config, ItemRepositoryContract $itemRepository, VariationRepositoryContract $variationRepository, FrontendSessionStorageFactoryContract $session, AddressRepositoryContract $addressRepository, CountryRepositoryContract $countryRepository, WebstoreHelper $webstoreHelper, PaymentHelper $paymentHelper, OrderRepositoryContract $orderRepository)
+    public function __construct( ConfigRepository $config, ItemRepositoryContract $itemRepository, VariationRepositoryContract $variationRepository, FrontendSessionStorageFactoryContract $session, AddressRepositoryContract $addressRepository, CountryRepositoryContract $countryRepository, WebstoreHelper $webstoreHelper,  OrderRepositoryContract $orderRepository)
     {
         $this->config = $config;
         $this->itemRepository = $itemRepository;
@@ -99,7 +92,6 @@ class PaymentService
         $this->addressRepository = $addressRepository;
         $this->countryRepository = $countryRepository;
         $this->webstoreHelper = $webstoreHelper;
-        $this->paymentHelper = $paymentHelper;
         $this->orderRepository = $orderRepository;
     }
     /**
