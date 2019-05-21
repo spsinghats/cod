@@ -1,7 +1,7 @@
 {
   "version": "1.0.7",
-  "name": "CashOnDelivery",
-  "marketplaceName"   : {"de":"Nachnahme","en":"Cash on delivery"},
+  "name": "Ceevo",
+  "marketplaceName"   : {"de":"Ceevo","en":"ceevo"},
   "license"           : "AGPL-3.0",
   "pluginIcon"        : "icon_plugin_xs.png",
   "price"             : 0.00,
