@@ -74,7 +74,7 @@ class CashOnDeliveryServiceProvider extends ServiceProvider
 
             // Listen for the event that executes the payment
             $eventDispatcher->listen(ExecutePayment::class,
-                function(ExecutePayment $event) use( $paymentHelper, $paymentService, $orderRepository)
+                function(ExecutePayment $event) use( $paymentHelper, $paymentMethodService, $orderRepository)
                 {
                     $this->getLogger(__METHOD__)->error('The ceevo processing.', $paymentHelper);
                     $result = $paymentService->executePayment($orderRepository->findOrderById($event->getOrderId()), $paymentMethodService->findByPaymentMethodId($event->getMop()));

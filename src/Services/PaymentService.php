@@ -10,7 +10,7 @@ use Plenty\Modules\Account\Address\Contracts\AddressRepositoryContract;
 use Plenty\Modules\Order\Shipping\Countries\Contracts\CountryRepositoryContract;
 use Plenty\Modules\Payment\Events\Checkout\GetPaymentMethodContent;
 use Plenty\Modules\Helper\Services\WebstoreHelper;
-use CashOnDelivery\Helper\PaymentHelper;
+use CashOnDelivery\Helper\CashOnDeliveryHelper;
 use Plenty\Plugin\Log\Loggable;
 use Plenty\Modules\Payment\Method\Models\PaymentMethod;
 use Plenty\Modules\Order\Models\Order;
@@ -347,7 +347,7 @@ class PaymentService
             if (is_array($refund) && $refund['error']) {
                 throw new \Exception($refund['error_msg']);
             }
-            $payment = $this->paymentHelper->createRefundPlentyPayment($refund);
+           // $payment = $this->paymentHelper->createRefundPlentyPayment($refund);
             $this->paymentHelper->assignPlentyPaymentToPlentyOrder($payment, $refundOrder->id);
             $this->orderRepository->updateOrder([
                 'statusId' => $this->getRefundSuccessfulStatus()
