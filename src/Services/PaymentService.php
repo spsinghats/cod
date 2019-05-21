@@ -169,7 +169,7 @@ class PaymentService
     public function executePayment(Order $order, PaymentMethod $paymentMethod): array
     {
         $this->getLogger(__METHOD__)->error('inside payment service', $paymentHelper);
-        $this->createCustomer($order);
+        //$this->createCustomer($order);
         // $transactionId = $this->session->getPlugin()->getValue('walleeTransactionId');
         // $parameters = [
         //     'transactionId' => $transactionId,
@@ -378,145 +378,7 @@ class PaymentService
         }
     }
 
-    function createCustomer($order){
-
-        // global $customer_id;
-       
-        // $data = array("billing" => array("city" => $order->billing['city'], "country" => $order->billing['country']['iso_code_2'],"state" => $order->billing['state'],"street" => $order->billing['street_address'],"zip"=> $order->billing['postcode']),
-        //               "email" => $order->customer['email_address'],"firstName" => $order->customer['firstname'],"lastName" => $order->customer['lastname'],"mobile" => $order->customer['telephone'],"phone" => $order->customer['telephone'],"sex" => strtoupper($customer_array['customers_gender']));  
-        // $data_string = json_encode($data);
-        // $get_data = $this->callAPI('POST', 'https://api.ceevo.com/acquiring/customer', $data_string);
-        // $response = json_decode($get_data, true);
-    
-        // $this->registerAccountToken($resonse,$order);
-        // $chargeResponse = $this->chargeApi($order);
-        // return $chargeResponse;
-    
-    }
-    
-    function registerAccountToken($customer_registered_id,$order){
-        // $token_array = array("accountToken" => $order->info['customerToken'],"default" => true);
-        // $token_string = json_encode($token_array);
-        // $get_data = $this->callAPI('POST', 'https://api.ceevo.com/acquiring/customer/'.$customer_registered_id, $token_string);
-        // $response = json_decode($get_data, true);
-    
-    }
-    
-    
-    function chargeApi($order){
-        // global $customer_id,$insert_id;
-        // $api = "https://auth.ceevo.com/auth/realms/ceevo-realm/protocol/openid-connect/token"; 
-        // $param['grant_type'] = "client_credentials"; 
-        // $param['client_id'] = MODULE_PAYMENT_CEEVO_CLIENT_ID; 
-        // $param['client_secret'] = MODULE_PAYMENT_CEEVO_CLIENT_SECRET; 
-        // $flag = MODULE_PAYMENT_CEEVO_SECURE_FLAG;
-        
-        // $mode = MODULE_PAYMENT_CEEVO_TRANSACTION_MODE;
-        // $ch = curl_init(); 
-        // curl_setopt($ch, CURLOPT_URL,$api); 
-        // curl_setopt($ch, CURLOPT_RETURNTRANSFER,1); 
-        // //curl_setopt ($ch, CURLOPT_SSL_VERIFYHOST, 1);
-        // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-        
-        // curl_setopt($ch, CURLOPT_POST, 1);
-        // curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($param));
-        // $res = curl_exec($ch); 
-        
-        // // $currencies = new ISOCurrencies();
-        // // $moneyParser = new DecimalMoneyParser($currencies);
-        // // $money = $moneyParser->parse((string)$order->info['total'], $order->info['currency']);
-        // // $converted_money = $money->getAmount(); // outputs 100000
-        // $orderItems = $order->products;
-        // $items_array = [];
-        // foreach($orderItems as $items){
-          
-        //   $item_json = array("item" => $items['name'],"itemValue" => $moneyParser->parse((string)$items['final_price'], $order->info['currency'])->getAmount());
-        //   array_push($items_array, json_encode($item_json));
-        // }
-        // $itemString = implode(',',$items_array);
-    
-        // // echo $res;
-        // $jres = json_decode($res, true);
-        // $access_token = $jres['access_token'];
-        
-        // $authorization = "Authorization: Bearer $access_token";
-        
-        // $charge_api = "https://api.ceevo.com/acquiring/charge"; 
-        
-        // $cparam = '{
-        //     "cartItems": ['.$itemString.'],
-        //     "amount": '.$converted_money.',
-        //     "3dsecure": "'.$flag.'",
-        //     "mode" : "'.$mode.'",
-        //     "methodCode":  "'.$order->info['paymentMethod'].'",
-        //     "currency": "'.$order->info['currency'].'",
-        //     "accountToken": "'.$order->info['customerToken'].'",
-        //     "sessionId":"'.$order->info['sessionToken'].'",
-        //     "referenceId": "'.$insert_id.'",
-        //     "statementDescriptor": "'.STORE_OWNER.'",
-        //     "userEmail": "'.$order->customer['email_address'].'",
-        //     "shippingAddress": {
-        //         "city": "'.$order->delivery['city'].'",
-        //         "country": "'.$order->delivery['country']['iso_code_2'].'",
-        //         "state": "'.$order->delivery['state'].'",
-        //         "street": "'.$order->delivery['street_address'].'",
-        //         "zip": "'.$order->delivery['postcode'].'"
-        //     }
-        // }';
-        
-        // //print_r($cparam);
-        // $ch = curl_init(); 
-        // curl_setopt($ch, CURLOPT_URL,$charge_api); 
-        // curl_setopt($ch, CURLOPT_RETURNTRANSFER,1); 
-        // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-        
-        // curl_setopt($ch, CURLOPT_POST, 1);
-        // curl_setopt($ch, CURLOPT_POSTFIELDS, $cparam);
-        // curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-        //         'Content-Type: application/json; charset=utf-8',
-        //         'Content-Length: ' . strlen($cparam),
-        //         $authorization
-        //     )
-        // );
-        // $cres = curl_exec($ch); 
-        // $charge_response = json_decode($cres, true);
-        // return $charge_response;
-    }
-
-    function callAPI($method, $url, $data){
-        $curl = curl_init();
-     
-        switch ($method){
-           case "POST":
-              curl_setopt($curl, CURLOPT_POST, 1);
-              if ($data)
-                 curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
-              break;
-           case "PUT":
-              curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
-              if ($data)
-                 curl_setopt($curl, CURLOPT_POSTFIELDS, $data);			 					
-              break;
-           default:
-              if ($data)
-                 $url = sprintf("%s?%s", $url, http_build_query($data));
-        }
-     
-        // OPTIONS:
-        curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_HTTPHEADER, array(
-           
-           'Content-Type: application/json',
-        ));
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-     
-        // EXECUTE:
-        $result = curl_exec($curl);
-        if(!$result){die("Connection Failure");}
-        curl_close($curl);
-        return $result;
-    }
+   
         
     
     
