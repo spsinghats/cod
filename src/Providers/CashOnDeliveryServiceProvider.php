@@ -39,11 +39,12 @@ class CashOnDeliveryServiceProvider extends ServiceProvider
         $payContainer->register('plenty::COD', CashOnDeliveryPaymentMethod::class,
             [ AfterBasketChanged::class, AfterBasketItemAdd::class, AfterBasketCreate::class, AfterShippingCostCalculated::class ]
         );
-        $this
-     ->getLogger('ContentController_createToDo')
-     ->setReferenceType('toDoId')
-     ->setReferenceValue($paymentHelper)
-     ->info('ToDoList::migration.createToDoInformation', ['userId' => $paymentHelper ]);
+        $this->getLogger(__METHOD__)->error('The webhook processing failed.', $paymentHelper);
+    //     $this
+    //  ->getLogger('ContentController_createToDo')
+    //  ->setReferenceType('toDoId')
+    //  ->setReferenceValue($paymentHelper)
+    //  ->info('ToDoList::migration.createToDoInformation', ['userId' => $paymentHelper ]);
         $this->getLogger(__METHOD__)->info('eventDetails', $paymentHelper);
 
         // Listen for the event that gets the payment method content
