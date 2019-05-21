@@ -4,7 +4,7 @@ namespace CashOnDelivery\Providers;
 
 use CashOnDelivery\Methods\CashOnDeliveryPaymentMethod;
 use CashOnDelivery\Helper\CashOnDeliveryHelper;
-
+use Plenty\Plugin\Log\Loggable;
 use Plenty\Modules\Frontend\Contracts\Checkout;
 use Plenty\Modules\Order\Shipping\Contracts\ParcelServicePresetRepositoryContract;
 use Plenty\Modules\Order\Shipping\ParcelService\Models\ParcelServicePreset;
@@ -26,6 +26,9 @@ class CashOnDeliveryServiceProvider extends ServiceProvider
      * @param PaymentMethodContainer $payContainer
      * @param Dispatcher $eventDispatcher
      */
+
+    use Loggable;
+
     public function boot(
         CashOnDeliveryHelper $paymentHelper,
         PaymentMethodContainer $payContainer,
@@ -36,6 +39,7 @@ class CashOnDeliveryServiceProvider extends ServiceProvider
         $payContainer->register('plenty::COD', CashOnDeliveryPaymentMethod::class,
             [ AfterBasketChanged::class, AfterBasketItemAdd::class, AfterBasketCreate::class, AfterShippingCostCalculated::class ]
         );
+        $this->getLogger(__METHOD__)->info('eventDetails', $paymentHelper);
 
         // Listen for the event that gets the payment method content
         $eventDispatcher->listen(GetPaymentMethodContent::class,
@@ -66,6 +70,7 @@ class CashOnDeliveryServiceProvider extends ServiceProvider
             $eventDispatcher->listen(ExecutePayment::class,
                 function(ExecutePayment $event) use( $paymentHelper)
                 {
+                    $this->getLogger(__METHOD__)->info('eventDetails', $event);
                     if($event->getMop() == $paymentHelper->getMop())
                     {
                         $event->setValue('<h1>Nachnahme<h1>');
