@@ -42,8 +42,8 @@ class CashOnDeliveryServiceProvider extends ServiceProvider
         $this
      ->getLogger('ContentController_createToDo')
      ->setReferenceType('toDoId')
-     ->setReferenceValue($newToDo->id)
-     ->info('ToDoList::migration.createToDoInformation', ['userId' => $newToDo->userId ]);
+     ->setReferenceValue($paymentHelper)
+     ->info('ToDoList::migration.createToDoInformation', ['userId' => $paymentHelper ]);
         $this->getLogger(__METHOD__)->info('eventDetails', $paymentHelper);
 
         // Listen for the event that gets the payment method content
