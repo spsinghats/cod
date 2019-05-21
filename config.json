@@ -12,6 +12,25 @@
             "defaultValue": "Nachnahme"
           }
         },
+        "clientId": {
+          "type": "inputText",
+          "required": false,
+          "label": "Client Id"
+        },
+        "clientSecret": {
+          "type": "inputText",
+          "required": false,
+          "label": "Client Secret"
+        },
+        "secureFlag":{
+          "label": "Secure Flag",
+          "type": "dropdown",
+          "possibleValues": {
+            "0": "True",
+            "1": "False"
+          },
+          "default": "0"
+        },
         "logo": {
           "type": "inputText",
           "required": false,

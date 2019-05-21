@@ -18,6 +18,8 @@ use Plenty\Modules\Payment\Events\Checkout\ExecutePayment;
 use Plenty\Modules\Order\Shipping\Events\AfterShippingCostCalculated;
 use Plenty\Modules\Payment\Method\Contracts\PaymentMethodContainer;
 use Plenty\Plugin\Translation\Translator;
+use CashOnDelivery\Services\PaymentService;
+use Plenty\Modules\Order\Contracts\OrderRepositoryContract;
 
 class CashOnDeliveryServiceProvider extends ServiceProvider
 {
@@ -32,21 +34,17 @@ class CashOnDeliveryServiceProvider extends ServiceProvider
     public function boot(
         CashOnDeliveryHelper $paymentHelper,
         PaymentMethodContainer $payContainer,
-        Dispatcher $eventDispatcher
+        Dispatcher $eventDispatcher,
+        PaymentService $paymentService,
+        OrderRepositoryContract $orderRepository
         ) 
     {
          // Register the Invoice payment method in the payment method container
         $payContainer->register('plenty::COD', CashOnDeliveryPaymentMethod::class,
             [ AfterBasketChanged::class, AfterBasketItemAdd::class, AfterBasketCreate::class, AfterShippingCostCalculated::class ]
         );
-        $this->getLogger(__METHOD__)->error('The webhook processing failed.', $paymentHelper);
-    //     $this
-    //  ->getLogger('ContentController_createToDo')
-    //  ->setReferenceType('toDoId')
-    //  ->setReferenceValue($paymentHelper)
-    //  ->info('ToDoList::migration.createToDoInformation', ['userId' => $paymentHelper ]);
-        $this->getLogger(__METHOD__)->info('eventDetails', $paymentHelper);
-
+        
+    
         // Listen for the event that gets the payment method content
         $eventDispatcher->listen(GetPaymentMethodContent::class,
             function(GetPaymentMethodContent $event) use( $paymentHelper) {
@@ -74,9 +72,11 @@ class CashOnDeliveryServiceProvider extends ServiceProvider
 
             // Listen for the event that executes the payment
             $eventDispatcher->listen(ExecutePayment::class,
-                function(ExecutePayment $event) use( $paymentHelper)
+                function(ExecutePayment $event) use( $paymentHelper, $paymentService, $orderRepository)
                 {
-                    $this->getLogger(__METHOD__)->info('eventDetails', $event);
+                    $this->getLogger(__METHOD__)->error('The ceevo processing.', $paymentHelper);
+                    $result = $paymentService->executePayment($orderRepository->findOrderById($event->getOrderId()), $paymentMethodService->findByPaymentMethodId($event->getMop()));
+                    $this->getLogger(__METHOD__)->error('The ceevo processing.', $result);
                     if($event->getMop() == $paymentHelper->getMop())
                     {
                         $event->setValue('<h1>Nachnahme<h1>');
