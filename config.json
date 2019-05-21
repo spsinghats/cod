@@ -22,6 +22,21 @@
           "required": false,
           "label": "Client Secret"
         },
+        "apiKey": {
+          "type": "inputText",
+          "required": false,
+          "label": "Api Key"
+        },
+        "successUrl": {
+          "type": "inputText",
+          "required": false,
+          "label": "Success Url"
+        },
+        "failureUrl": {
+          "type": "inputText",
+          "required": false,
+          "label": "Failure Url"
+        },
         "secureFlag":{
           "label": "Secure Flag",
           "type": "selectBox",
@@ -30,14 +45,31 @@
             "selectBoxValues": [
                 {
                     "value": "false",
-                    "caption": "Config.socialThemePossibleValueStandard"
+                    "caption": "False"
                 },
                 {
                     "value": "true",
-                    "caption": "Config.socialThemePossibleValueGrey"
+                    "caption": "True"
                 }
             ]
-        }
+          }
+        },
+        "paymentMode":{
+          "label": "Payment Mode",
+          "type": "selectBox",
+          "options": {
+            "defaultValue": "TEST",
+            "selectBoxValues": [
+                {
+                    "value": "TEST",
+                    "caption": "TEST"
+                },
+                {
+                    "value": "LIVE",
+                    "caption": "LIVE"
+                }
+            ]
+          }
         },
         "logo": {
           "type": "inputText",
