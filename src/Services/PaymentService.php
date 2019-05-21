@@ -164,8 +164,8 @@ class PaymentService
         $this->getLogger(__METHOD__)->error('inside payment service', $order);
         $this->getLogger(__METHOD__)->error('inside payment service', $order->orderItems);
         $this->getLogger(__METHOD__)->error('inside payment service',$order->billingAddress);
-        $this->getLogger(__METHOD__)->error('inside payment service', $this->config->get('ceevo.clientId'));
-        $this->getLogger(__METHOD__)->error('inside payment service', $this->config->get('cashondelivery.clientId'));
+        $this->getLogger(__METHOD__)->error('inside payment service', $this->config->get('Ceevo.clientId'));
+        $this->getLogger(__METHOD__)->error('inside payment service', $this->config->get('CashOnDelivery.clientId'));
         //$this->getLogger(__METHOD__)->error('inside payment service',$this->countryRepository->findIsoCode($address->countryId, 'iso_code_2'));
        // $customer = $this->createCustomer($order);
         // $transactionId = $this->session->getPlugin()->getValue('walleeTransactionId');

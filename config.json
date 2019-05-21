@@ -24,12 +24,20 @@
         },
         "secureFlag":{
           "label": "Secure Flag",
-          "type": "inputDropdown",
-          "possibleValues": {
-            "0": "True",
-            "1": "False"
-          },
-          "default": "0"
+          "type": "selectBox",
+          "options": {
+            "defaultValue": "false",
+            "selectBoxValues": [
+                {
+                    "value": "false",
+                    "caption": "Config.socialThemePossibleValueStandard"
+                },
+                {
+                    "value": "true",
+                    "caption": "Config.socialThemePossibleValueGrey"
+                }
+            ]
+        }
         },
         "logo": {
           "type": "inputText",
