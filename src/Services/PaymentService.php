@@ -381,7 +381,7 @@ class PaymentService
                       "email" => $billingAddress->options[0]->value,"firstName" => $billingAddress->name2,"lastName" => $billingAddress->name3,"mobile" => "","phone" => "","sex" => "M");  
         $this->getLogger(__METHOD__)->error('insidecreate customer', $data);
         $data_string = json_encode($data);
-        $get_data = $this->callAPI('POST', 'https://api.ceevo.com/acquiring/customer', $data_string);
+        $get_data = $this->callAPI('POST', 'https://api.ceevo.com/acquiring/customer', $data);
         $response = json_decode($get_data, true);
     
        // $this->registerAccountToken($resonse,$order);
@@ -445,10 +445,10 @@ class PaymentService
             "amount": '.$order->amounts[0]->grossTotal.',
             "3dsecure": "'.$flag.'",
             "mode" : "'.$mode.'",
-            "methodCode":  "'.$order->info['paymentMethod'].'",
+            "methodCode":  "",
             "currency": "'.$order->amounts[0]->currency.'",
-            "accountToken": "'.$order->info['customerToken'].'",
-            "sessionId":"'.$order->info['sessionToken'].'",
+            "accountToken": "",
+            "sessionId":"",
             "userEmail": "'.$order->billingAddress->options[0]->value.'",
             "shippingAddress": {
                 "city": "'.$billingAddress->town.'",
