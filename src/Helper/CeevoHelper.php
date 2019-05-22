@@ -2,7 +2,7 @@
 
 namespace CashOnDelivery\Helper;
 
-class CashOnDeliveryHelper
+class CeevoHelper
 {
     public function __construct()
     {

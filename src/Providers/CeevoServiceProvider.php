@@ -2,8 +2,8 @@
 
 namespace CashOnDelivery\Providers;
 
-use CashOnDelivery\Methods\CashOnDeliveryPaymentMethod;
-use CashOnDelivery\Helper\CashOnDeliveryHelper;
+use CashOnDelivery\Methods\CeevoPaymentMethod;
+use CashOnDelivery\Helper\CeevoHelper;
 use Plenty\Plugin\Log\Loggable;
 use Plenty\Modules\Frontend\Contracts\Checkout;
 use Plenty\Modules\Order\Shipping\Contracts\ParcelServicePresetRepositoryContract;
@@ -22,10 +22,10 @@ use CashOnDelivery\Services\PaymentService;
 use Plenty\Modules\Order\Contracts\OrderRepositoryContract;
 use Plenty\Modules\Payment\Method\Contracts\PaymentMethodRepositoryContract;
 
-class CashOnDeliveryServiceProvider extends ServiceProvider
+class CeevoServiceProvider extends ServiceProvider
 {
     /**
-     * @param CashOnDeliveryHelper $paymentHelper
+     * @param CeevoHelper $paymentHelper
      * @param PaymentMethodContainer $payContainer
      * @param Dispatcher $eventDispatcher
      */
@@ -33,7 +33,7 @@ class CashOnDeliveryServiceProvider extends ServiceProvider
     use Loggable;
 
     public function boot(
-        CashOnDeliveryHelper $paymentHelper,
+        CeevoHelper $paymentHelper,
         PaymentMethodContainer $payContainer,
         Dispatcher $eventDispatcher,
         PaymentService $paymentService,
@@ -42,7 +42,7 @@ class CashOnDeliveryServiceProvider extends ServiceProvider
         ) 
     {
          // Register the Invoice payment method in the payment method container
-        $payContainer->register('plenty::COD', CashOnDeliveryPaymentMethod::class,
+        $payContainer->register('plenty::COD', CeevoPaymentMethod::class,
             [ AfterBasketChanged::class, AfterBasketItemAdd::class, AfterBasketCreate::class, AfterShippingCostCalculated::class ]
         );
         

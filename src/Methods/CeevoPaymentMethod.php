@@ -13,10 +13,10 @@ use Plenty\Modules\Basket\Contracts\BasketRepositoryContract;
 use Plenty\Modules\Account\Contact\Contracts\ContactRepositoryContract;
 
 /**
- * Class CashOnDeliveryPaymentMethod
+ * Class CeevoPaymentMethod
  * @package CashOnDelivery\Methods
  */
-class CashOnDeliveryPaymentMethod extends PaymentMethodService
+class CeevoPaymentMethod extends PaymentMethodService
 {
     /**
      * @var ConfigRepository
