@@ -66,7 +66,7 @@ class CashOnDeliveryServiceProvider extends ServiceProvider
                             if ((bool)$parcelPreset->isCod) {
                               
                                 $event->setValue('<h1>ceevo payment plugin<h1><input type="text" name="token_hidden_input">');
-                                $event->setType('continue');
+                                $event->setType('htmlContent');
                                 $this->getLogger(__METHOD__)->error('payment method content event.', $event);
                             }
                         }
