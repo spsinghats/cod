@@ -16,5 +16,11 @@
   "type": "payment",
   "namespace": "CashOnDelivery",
   "require": [],
-  "serviceProvider": "CashOnDelivery\\Providers\\CashOnDeliveryServiceProvider"
+  "serviceProvider": "CashOnDelivery\\Providers\\CashOnDeliveryServiceProvider",
+  "dataProviders"     : [
+    {
+    "key"           :"CashOnDelivery\\Providers\\ButtonProvider",
+    "name"          :"CeevoPayment button",
+    "description"   :"Display the button for this payment method"
+  }]
 }
