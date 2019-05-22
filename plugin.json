@@ -22,5 +22,12 @@
     "key"           :"CashOnDelivery\\Providers\\ButtonProvider",
     "name"          :"CeevoPayment button",
     "description"   :"Display the button for this payment method"
-  }]
+  },
+  {
+    "key"           :"CashOnDelivery\\Providers\\CeevoJsProvider",
+    "name"          :"Register ceevo js",
+    "description"   :"Register Ceevo Js"
+  }
+
+]
 }
