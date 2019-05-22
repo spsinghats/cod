@@ -90,7 +90,7 @@ class ButtonProvider
 
     public function call(Twig $twig):string
     {
-        $get_data = $this->callAPI('GET', 'https://api.ceevo.com/acquiring/methods', []);
+        $get_data = callAPI('GET', 'https://api.ceevo.com/acquiring/methods', []);
         $response = json_decode($get_data, true);
         $methods_array = [];
         foreach($response as $methods){
