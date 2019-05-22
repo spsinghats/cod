@@ -1,9 +1,9 @@
 <?php
 
-namespace CashOnDelivery\Providers;
+namespace Ceevo\Providers;
 
-use CashOnDelivery\Methods\CeevoPaymentMethod;
-use CashOnDelivery\Helper\CeevoHelper;
+use Ceevo\Methods\CeevoPaymentMethod;
+use Ceevo\Helper\CeevoHelper;
 use Plenty\Plugin\Log\Loggable;
 use Plenty\Modules\Frontend\Contracts\Checkout;
 use Plenty\Modules\Order\Shipping\Contracts\ParcelServicePresetRepositoryContract;
@@ -18,7 +18,7 @@ use Plenty\Modules\Payment\Events\Checkout\ExecutePayment;
 use Plenty\Modules\Order\Shipping\Events\AfterShippingCostCalculated;
 use Plenty\Modules\Payment\Method\Contracts\PaymentMethodContainer;
 use Plenty\Plugin\Translation\Translator;
-use CashOnDelivery\Services\PaymentService;
+use Ceevo\Services\PaymentService;
 use Plenty\Modules\Order\Contracts\OrderRepositoryContract;
 use Plenty\Modules\Payment\Method\Contracts\PaymentMethodRepositoryContract;
 
@@ -54,7 +54,7 @@ class CeevoServiceProvider extends ServiceProvider
                     $this->getLogger(__METHOD__)->error('inside payment method content event.', $paymentHelper);
                     $event->setType('errorCode');
                     $translator = pluginApp(Translator::class);
-                    $event->setValue( $translator->trans('CashOnDelivery::error.errorInvalidParcelService'));
+                    $event->setValue( $translator->trans('Ceevo::error.errorInvalidParcelService'));
 
                     /** @var Checkout $checkoutService */
                     $checkoutService = pluginApp(Checkout::class);

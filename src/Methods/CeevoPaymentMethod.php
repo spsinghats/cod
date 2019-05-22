@@ -1,6 +1,6 @@
 <?php
 
-namespace CashOnDelivery\Methods;
+namespace Ceevo\Methods;
 
 use Plenty\Modules\Frontend\Services\AccountService;
 use Plenty\Modules\Payment\Method\Contracts\PaymentMethodService;
@@ -14,7 +14,7 @@ use Plenty\Modules\Account\Contact\Contracts\ContactRepositoryContract;
 
 /**
  * Class CeevoPaymentMethod
- * @package CashOnDelivery\Methods
+ * @package Ceevo\Methods
  */
 class CeevoPaymentMethod extends PaymentMethodService
 {
@@ -120,7 +120,7 @@ class CeevoPaymentMethod extends PaymentMethodService
         if(strlen($paymentMethodName)){
             return $paymentMethodName;
         }
-        $name = $this->config->get('CashOnDelivery.name');
+        $name = $this->config->get('Ceevo.name');
         if(strlen($name) > 0) {
             return $name;
         } 
@@ -129,13 +129,13 @@ class CeevoPaymentMethod extends PaymentMethodService
 
     public function getIcon()
     {
-        $logo = $this->config->get('CashOnDelivery.logo');
+        $logo = $this->config->get('Ceevo.logo');
         if(strlen($logo) > 0) {
             return $logo;
         }
         /** @var Application */
         $app = pluginApp(Application::class);
-        return $app->getUrlPath('cashondelivery').'/images/logos/nachnahme.png';
+        return $app->getUrlPath('ceevo').'/images/logos/nachnahme.png';
     }
 
     public function isSwitchableFrom()

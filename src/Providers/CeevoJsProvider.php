@@ -6,7 +6,7 @@
  * Time: 18:27
  */
 
-namespace CashOnDelivery\Providers;
+namespace Ceevo\Providers;
 
 use Plenty\Plugin\Templates\Twig;
 

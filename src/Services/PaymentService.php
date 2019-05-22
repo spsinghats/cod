@@ -1,5 +1,5 @@
 <?php
-namespace CashOnDelivery\Services;
+namespace Ceevo\Services;
 use Plenty\Modules\Basket\Models\Basket;
 use Plenty\Plugin\ConfigRepository;
 use Plenty\Modules\Item\Item\Contracts\ItemRepositoryContract;

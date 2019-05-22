@@ -1,6 +1,6 @@
 <?php
 
-namespace CashOnDelivery\Helper;
+namespace Ceevo\Helper;
 
 class CeevoHelper
 {
