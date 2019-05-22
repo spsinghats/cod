@@ -8,7 +8,7 @@
 <script>
     console.log("on ready ceevo");
     const ceevo = new CeevoPayment({ el: "div#button_wrapper", "envMode":"DEV", APIkey: "edaa3565-f0c4-4398-9037-84e4b9949e53TEST", price: "30", currency: "INR", form: "form#checkout_payment", tokenInput: "input#token_hidden_input", sessionInput: "input#session_hidden_input" });
-    $( document ).ready(function() {
+    $('#checkout_payment').ready(function() {
         ceevo.render();
     });
 
