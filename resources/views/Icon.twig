@@ -1,2 +1,14 @@
-<div> ceevo payment plugin</div> 
-<input type="text" name="token_hidden_input">
+<div> ceevo payment plugin</div>
+<form id="checkout_payment"> 
+<div id="button_wrapper"></div>
+<input type="hidden" name="token_hidden_input">
+<input type="hidden" name="session_hidden_input">
+</form>
+<link rel="stylesheet" href="https://sdk.ceevo.com/ceevo.css"> <script src="https://sdk.ceevo.com/ceevo.js"></script>
+<script>
+    console.log("on ready ceevo");
+    const ceevo = new CeevoPayment({ el: "div#button_wrapper", APIkey: "edaa3565-f0c4-4398-9037-84e4b9949e53TEST", price: "30", currency: "INR", form: "form#checkout_payment", tokenInput: "input#token_hidden_input", sessionInput: "input#session_hidden_input" });
+    ceevo.render();
+
+
+</script>
