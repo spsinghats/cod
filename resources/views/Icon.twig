@@ -1,5 +1,10 @@
-<div> ceevo payment plugin</div>
+
 <form id="checkout_payment"> 
+<select name="paymentMethod">
+{% for item in methods %}
+    <option value="item">{{item}}</option>
+ {% endfor %}
+</select>
 <div id="button_wrapper"></div>
 <input type="hidden" name="token_hidden_input" id="token_hidden_input">
 <input type="hidden" name="session_hidden_input" id="session_hidden_input">

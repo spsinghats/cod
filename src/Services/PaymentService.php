@@ -14,7 +14,6 @@ use Plenty\Plugin\Log\Loggable;
 use Plenty\Modules\Payment\Method\Models\PaymentMethod;
 use Plenty\Modules\Order\Models\Order;
 use Plenty\Modules\Order\Contracts\OrderRepositoryContract;
-//use Wallee\Helper\OrderHelper;
 use Plenty\Modules\Item\Variation\Contracts\VariationRepositoryContract;
 use Plenty\Modules\Order\RelationReference\Models\OrderRelationReference;
 
