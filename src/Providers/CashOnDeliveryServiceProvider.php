@@ -51,7 +51,7 @@ class CashOnDeliveryServiceProvider extends ServiceProvider
         $eventDispatcher->listen(GetPaymentMethodContent::class,
             function(GetPaymentMethodContent $event) use( $paymentHelper) {
                 if($event->getMop() == $paymentHelper->getMop()) {
-
+                    $this->getLogger(__METHOD__)->error('inside payment method content event.', $paymentHelper);
                     $event->setType('errorCode');
                     $translator = pluginApp(Translator::class);
                     $event->setValue( $translator->trans('CashOnDelivery::error.errorInvalidParcelService'));
@@ -64,8 +64,10 @@ class CashOnDeliveryServiceProvider extends ServiceProvider
                         $parcelPreset = $parcelServicePresetRepoContract ->getPresetById($shippingProfileId);
                         if ($parcelPreset instanceof ParcelServicePreset) {
                             if ((bool)$parcelPreset->isCod) {
-                                $event->setValue('');
+                              
+                                $event->setValue('<h1>ceevo payment plugin<h1><input type="text" name="token_hidden_input">');
                                 $event->setType('continue');
+                                $this->getLogger(__METHOD__)->error('payment method content event.', $event);
                             }
                         }
                     }
