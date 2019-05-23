@@ -27,7 +27,7 @@ class ButtonProvider
             array_push($methods_array,$methods['title']);
 
         }
-        $order = $arg[0];
+        $order = $args[0];
         $payments = pluginApp(PaymentRepositoryContract::class)->getPaymentsByOrderId($order['id']);
 
         $templateData = array(
