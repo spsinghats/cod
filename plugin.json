@@ -21,7 +21,8 @@
     {
     "key"           :"Ceevo\\Providers\\ButtonProvider",
     "name"          :"CeevoPayment button",
-    "description"   :"Display the button for this payment method"
+    "description"   :"Display the button for this payment method",
+    "defaultLayoutContainer": "Ceres::OrderConfirmation.AdditionalPaymentInformation"
   },
   {
     "key"           :"Ceevo\\Providers\\CeevoJsProvider",
