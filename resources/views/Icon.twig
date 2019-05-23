@@ -5,7 +5,7 @@
     <option value="item">{{item}}</option>
  {% endfor %}
 </select>
-<div>{{apiKey}}</div>
+<div>{{price}}</div>
 <div id="button_wrapper"></div>
 <input type="hidden" name="token_hidden_input" id="token_hidden_input">
 <input type="hidden" name="session_hidden_input" id="session_hidden_input">
@@ -13,7 +13,7 @@
 
 <script>
     console.log("on ready ceevo");
-    const ceevo = new CeevoPayment({ el: "div#button_wrapper", "envMode":"DEV", APIkey: "edaa3565-f0c4-4398-9037-84e4b9949e53TEST", price: "30", currency: "INR", form: "form#checkout_payment", tokenInput: "input#token_hidden_input", sessionInput: "input#session_hidden_input" });
+    const ceevo = new CeevoPayment({ el: "div#button_wrapper", "envMode":"DEV", APIkey: "{{apiKey}}", price: "30", currency: "INR", form: "form#checkout_payment", tokenInput: "input#token_hidden_input", sessionInput: "input#session_hidden_input" });
     $('#checkout_payment').ready(function() {
         ceevo.render();
     });

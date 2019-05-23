@@ -10,11 +10,12 @@ namespace Ceevo\Providers;
 
 use Plenty\Plugin\Templates\Twig;
 use Plenty\Plugin\ConfigRepository;
+use Plenty\Plugin\Log\Loggable;
 
 
 class ButtonProvider
 {
-    
+   use Loggable;
     public function call(Twig $twig):string
     {
         
@@ -25,10 +26,16 @@ class ButtonProvider
             array_push($methods_array,$methods['title']);
 
         }
-        //$apiKey = $this->config->get('Ceevo.apiKey');
+        $order = $arg[0];
+        $payments = pluginApp(PaymentRepositoryContract::class)->getPaymentsByOrderId($order['id']);
+
+        $this->getLogger(__METHOD__)->error('inside button provider', $order);
+        $this->getLogger(__METHOD__)->error('inside button provider', $payments);
+
         $templateData = array(
             'methods' => $methods_array,
-            'apiKey' => pluginApp(ConfigRepository::class)->get('Ceevo.apiKey')
+            'apiKey' => pluginApp(ConfigRepository::class)->get('Ceevo.apiKey'),
+            'price' => $order->amounts[0]->grossTotal
         );
         return $twig->render('Ceevo::Icon',$templateData);
     }
