@@ -30,10 +30,6 @@ class ButtonProvider
         $order = $arg[0];
         $payments = pluginApp(PaymentRepositoryContract::class)->getPaymentsByOrderId($order['id']);
 
-        self::getLogger(__METHOD__)->error('inside button provider arg', $arg);
-        self::getLogger(__METHOD__)->error('inside button provider order', $order);
-        self::getLogger(__METHOD__)->error('inside button provider', $payments);
-
         $templateData = array(
             'methods' => $methods_array,
             'apiKey' => pluginApp(ConfigRepository::class)->get('Ceevo.apiKey'),
