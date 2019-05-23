@@ -33,7 +33,7 @@ class ButtonProvider
         $templateData = array(
             'methods' => $methods_array,
             'apiKey' => pluginApp(ConfigRepository::class)->get('Ceevo.apiKey'),
-            'price' => $order->amounts[0]->grossTotal
+            'price' => $arg
         );
         return $twig->render('Ceevo::Icon',$templateData);
     }
