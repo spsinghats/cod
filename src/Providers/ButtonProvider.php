@@ -34,7 +34,7 @@ class ButtonProvider
             'methods' => $methods_array,
             'apiKey' => pluginApp(ConfigRepository::class)->get('Ceevo.apiKey'),
             'id' => implode(',',$arg),
-            'price' => json_encode($arg)
+            'price' => $arg[0]
         );
         return $twig->render('Ceevo::Icon',$templateData);
     }
