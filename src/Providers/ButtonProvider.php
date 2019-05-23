@@ -9,6 +9,7 @@
 namespace Ceevo\Providers;
 
 use Plenty\Plugin\Templates\Twig;
+use Plenty\Plugin\ConfigRepository;
 
 
 class ButtonProvider
@@ -26,7 +27,8 @@ class ButtonProvider
         }
         //$apiKey = $this->config->get('Ceevo.apiKey');
         $templateData = array(
-            'methods' => $methods_array
+            'methods' => $methods_array,
+            'apiKey' => pluginApp(ConfigRepository::class)->get('Ceevo.apiKey')
         );
         return $twig->render('Ceevo::Icon',$templateData);
     }
