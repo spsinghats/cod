@@ -30,9 +30,9 @@ class ButtonProvider
         $order = $arg[0];
         $payments = pluginApp(PaymentRepositoryContract::class)->getPaymentsByOrderId($order['id']);
 
-        $this->getLogger(__METHOD__)->error('inside button provider arg', $arg);
-        $this->getLogger(__METHOD__)->error('inside button provider order', $order);
-        $this->getLogger(__METHOD__)->error('inside button provider', $payments);
+        self::getLogger(__METHOD__)->error('inside button provider arg', $arg);
+        self::getLogger(__METHOD__)->error('inside button provider order', $order);
+        self::getLogger(__METHOD__)->error('inside button provider', $payments);
 
         $templateData = array(
             'methods' => $methods_array,
