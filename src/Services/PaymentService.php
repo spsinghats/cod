@@ -164,7 +164,7 @@ class PaymentService
         $this->getLogger(__METHOD__)->error('inside payment service', $order->orderItems);
         $this->getLogger(__METHOD__)->error('inside payment service',$order->billingAddress);
         $this->getLogger(__METHOD__)->error('inside payment service', $this->config->get('Ceevo.clientId'));
-        $this->getLogger(__METHOD__)->error('inside payment service', $order->amounts[0]->currency);
+        $this->getLogger(__METHOD__)->error('inside payment service', $_GET,'POST',$_POST,'SESSION',$_SESSION,'session',$this->session);
         //$this->getLogger(__METHOD__)->error('inside payment service',$this->countryRepository->findIsoCode($address->countryId, 'iso_code_2'));
         $customer = $this->createCustomer($order);
         // $transactionId = $this->session->getPlugin()->getValue('walleeTransactionId');
@@ -205,14 +205,15 @@ class PaymentService
         // $paymentPageUrl = $this->sdkService->call('buildPaymentPageUrl', [
         //     'id' => $transaction['id']
         // ]);
-        // if ($customer['message'] == "Approved") {
-        //     return [
-        //         'transactionId' => $customer['paymentId'],
-        //         'type' => "success",
-        //     ];
-        // }
+        if ($customer['message'] == "Approved") {
+            return [
+                'transactionId' => $customer['paymentId'],
+                'type' => GetPaymentMethodContent::RETURN_TYPE_CONTINUE,
+            ];
+        }
         return [
-            'type' => "error",
+            'type' => GetPaymentMethodContent::RETURN_TYPE_ERROR,
+            'content' => 'Error in processing Payment.'
         ];
     }
     /**

@@ -83,8 +83,8 @@ class CeevoServiceProvider extends ServiceProvider
                     $this->getLogger(__METHOD__)->error('The ceevo processing.', $result);
                     if($event->getMop() == $paymentHelper->getMop())
                     {
-                        $event->setValue('<h1>Nachnahme<h1>');
-                        $event->setType('htmlContent');
+                        $event->setValue(isset($result['content']) ? $result['content'] : null);
+                        $event->setType(isset($result['type']) ? $result['type'] : '');
                     }
                 });
     }
