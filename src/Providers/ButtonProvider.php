@@ -16,7 +16,7 @@ use Plenty\Plugin\Log\Loggable;
 class ButtonProvider
 {
    use Loggable;
-    public function call(Twig $twig):string
+    public function call(Twig $twig,$arg):string
     {
         
         $get_data = self::callAPI('GET', 'https://api.ceevo.com/acquiring/methods', []);
@@ -29,7 +29,8 @@ class ButtonProvider
         $order = $arg[0];
         $payments = pluginApp(PaymentRepositoryContract::class)->getPaymentsByOrderId($order['id']);
 
-        $this->getLogger(__METHOD__)->error('inside button provider', $order);
+        $this->getLogger(__METHOD__)->error('inside button provider arg', $arg);
+        $this->getLogger(__METHOD__)->error('inside button provider order', $order);
         $this->getLogger(__METHOD__)->error('inside button provider', $payments);
 
         $templateData = array(
