@@ -2,7 +2,7 @@
 <form id="checkout_payment"> 
 <select name="paymentMethod">
 {% for item in methods %}
-    <option value="item">{{item}}</option>
+    <option value="{{item}}">{{item}}</option>
  {% endfor %}
 </select>
 <div>{{price}}</div>
