@@ -13,10 +13,18 @@ use Plenty\Plugin\ConfigRepository;
 use Plenty\Plugin\Log\Loggable;
 use Plenty\Modules\Payment\Contracts\PaymentRepositoryContract;
 
-
+/**
+ * Class ButtonProvider
+ * @package Ceevo\Providers
+ */
 class ButtonProvider
 {
       use Loggable;
+      /**
+     * @param Twig $twig
+     * @param $args
+     * @return string
+     */
       public function call(Twig $twig, $args):string
       {
             
