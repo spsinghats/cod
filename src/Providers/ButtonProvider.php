@@ -17,7 +17,7 @@ use Plenty\Modules\Payment\Contracts\PaymentRepositoryContract;
 class ButtonProvider
 {
       use Loggable;
-      public function call(Twig $twig,$arg):string
+      public function call(Twig $twig, $args):string
       {
             
         $get_data = self::callAPI('GET', 'https://api.ceevo.com/acquiring/methods', []);
@@ -33,8 +33,8 @@ class ButtonProvider
         $templateData = array(
             'methods' => $methods_array,
             'apiKey' => pluginApp(ConfigRepository::class)->get('Ceevo.apiKey'),
-            'id' => array_keys($arg)[0],
-            'price' => empty($arg)
+            'id' => array_keys($args)[0],
+            'price' => empty($args)
         );
         return $twig->render('Ceevo::Icon',$templateData);
       }
